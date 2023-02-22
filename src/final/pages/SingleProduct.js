@@ -4,6 +4,9 @@ export const productLoader = async ({ params }) => {
   const res = await fetch(
     "https://6300a18859a8760a757d441c.mockapi.io/products/" + params.productId
   );
+  if (!res.ok) {
+    throw new Error("Product Not Found");
+  }
   const data = await res.json();
   return data;
 };

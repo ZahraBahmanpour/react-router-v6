@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import SharedProductLayout from "./pages/SharedProductLayout";
+import ProductError from "./pages/ProductError";
 // import About from "./pages/About";
 const About = React.lazy(() => import("./pages/About"));
 
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
           path=":productId"
           element={<SingleProduct />}
           loader={productLoader}
+          errorElement={<ProductError />}
         />
       </Route>
 
