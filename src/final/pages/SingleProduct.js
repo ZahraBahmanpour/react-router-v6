@@ -1,21 +1,15 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
+
+export const productLoader = async ({ params }) => {
+  const res = await fetch(
+    "https://6300a18859a8760a757d441c.mockapi.io/products/" + params.productId
+  );
+  const data = await res.json();
+  return data;
+};
 
 const SingleProduct = () => {
-  const [product, setProduct] = useState({});
-  const params = useParams();
-  useEffect(() => {
-    const getProduct = async () => {
-      const res = await fetch(
-        "https://6300a18859a8760a757d441c.mockapi.io/products/" +
-          params.productId
-      );
-      const data = await res.json();
-      setProduct(data);
-    };
-    getProduct();
-  }, []);
-
+  const product = useLoaderData();
   const { name, description } = product;
   return (
     <section className="section product">
