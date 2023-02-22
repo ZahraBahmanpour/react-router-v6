@@ -1,8 +1,9 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children, user }) => {
+const ProtectedRoute = ({ children }) => {
+  const user = localStorage.getItem("username");
   if (!user) {
-    return <Navigate to='/' />;
+    return <Navigate to="/" />;
   }
   return children;
 };

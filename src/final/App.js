@@ -1,4 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 import React, { useState } from "react";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -11,41 +16,40 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import SharedProductLayout from "./pages/SharedProductLayout";
 // import About from "./pages/About";
 const About = React.lazy(() => import("./pages/About"));
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<SharedLayout />}>
+      <Route index element={<Home />} />
+      <Route
+        path="about"
+        element={
+          <React.Suspense fallback={<div>...</div>}>
+            <About />
+          </React.Suspense>
+        }
+      />
+
+      <Route path="products" element={<SharedProductLayout />}>
+        <Route index element={<Products />} />
+        <Route path=":productId" element={<SingleProduct />} />
+      </Route>
+
+      <Route path="login" element={<Login />} />
+      <Route
+        path="dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Error />} />
+    </Route>
+  )
+);
 function App() {
-  const [user, setUser] = useState(null);
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route
-            path="about"
-            element={
-              <React.Suspense fallback={<div>...</div>}>
-                <About />
-              </React.Suspense>
-            }
-          />
-
-          <Route path="products" element={<SharedProductLayout />}>
-            <Route index element={<Products />} />
-            <Route path=":productId" element={<SingleProduct />} />
-          </Route>
-
-          <Route path="login" element={<Login setUser={setUser}></Login>} />
-          <Route
-            path="dashboard"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard user={user} />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Error />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
