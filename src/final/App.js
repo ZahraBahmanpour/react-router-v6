@@ -11,7 +11,7 @@ import Error from "./pages/Error";
 import SharedLayout from "./pages/SharedLayout";
 import SingleProduct, { productLoader } from "./pages/SingleProduct";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+import Login, { loginAction } from "./pages/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import SharedProductLayout from "./pages/SharedProductLayout";
 import ProductError from "./pages/ProductError";
@@ -41,7 +41,7 @@ const router = createBrowserRouter(
         />
       </Route>
 
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<Login />} action={loginAction} />
       <Route
         path="dashboard"
         element={
